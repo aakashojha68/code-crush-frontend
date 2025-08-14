@@ -1,3 +1,5 @@
+import Loader from "./Loader";
+
 const UserCard = ({ user, onStatusClick, hideBtn = false }) => {
   const { _id, photoUrl, firstName, lastName, gender, age, about } = user || {};
 
@@ -12,7 +14,7 @@ const UserCard = ({ user, onStatusClick, hideBtn = false }) => {
           <p>
             {gender} | {age}
           </p>
-          <p>{about}</p>
+          <p className="line-clamp-2">{about}</p>
           {!hideBtn && (
             <div className="justify-center card-actions mt-5">
               <button

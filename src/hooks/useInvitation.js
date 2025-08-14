@@ -8,11 +8,12 @@ import { addInvitation, removeInvitation } from "../utils/invitationSlice";
 const useInvitation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [showShimmer, setShowShimmer] = useState(true);
 
   const fetchInvitations = async () => {
     try {
-      setLoading(true);
+      setShowShimmer(true);
       const res = await axios.get(BACKEND_BASE_URL + "/request/received", {
         withCredentials: true,
       });
@@ -22,7 +23,7 @@ const useInvitation = () => {
         navigate("/login");
       }
     } finally {
-      setLoading(false);
+      setShowShimmer(false);
     }
   };
 
@@ -50,7 +51,7 @@ const useInvitation = () => {
     fetchInvitations();
   }, []);
 
-  return { loading, saveUserAction };
+  return { showShimmer, loading, saveUserAction };
 };
 
 export default useInvitation;

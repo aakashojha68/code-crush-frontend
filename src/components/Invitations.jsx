@@ -1,16 +1,18 @@
 import { useSelector } from "react-redux";
 import useInvitation from "../hooks/useInvitation";
 import ConnectionCardSkeleton from "../skeletons/ConnectionCardSkeleton";
+import Loader from "./Loader";
 
 const Invitations = () => {
-  const { loading, saveUserAction } = useInvitation();
+  const { loading, showShimmer, saveUserAction } = useInvitation();
   const invitations = useSelector((store) => store.invitations);
 
   return (
     <div className="my-4 max-w-3xl relative m-auto">
       <div className="divider text-xl font-bold my-6">Invitations</div>
+      {loading && <Loader />}
 
-      {loading
+      {showShimmer
         ? Array(3)
             .fill()
             .map((_, i) => {
@@ -64,9 +66,11 @@ const Invitations = () => {
             );
           })}
 
-      {!loading && (!invitations || invitations.length === 0) && (
-        <h1 className="my-2">No invitaions found !!</h1>
-      )}
+      {!loading &&
+        !showShimmer &&
+        (!invitations || invitations.length === 0) && (
+          <h1 className="my-2">No invitaions found !!</h1>
+        )}
     </div>
   );
 };

@@ -17,8 +17,12 @@ const useFeed = () => {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [showShimmer, setShowShimmer] = useState(true);
+
   const fetchUserFeed = async () => {
     try {
+      setShowShimmer(true);
       const res = await axios.get(
         BACKEND_BASE_URL + "/user/feed?limit=" + LIMIT,
         {
@@ -29,14 +33,17 @@ const useFeed = () => {
         addFeed({ feeds: res.data.data, totalUsers: res.data.totalUsers })
       );
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         navigate("/login");
       }
+    } finally {
+      setShowShimmer(false);
     }
   };
 
   const handleUserAction = async (status, id) => {
     try {
+      setLoading(true);
       const res = await axios.get(
         BACKEND_BASE_URL + "/request/send/" + status + "/" + id,
         {
@@ -54,6 +61,11 @@ const useFeed = () => {
       setTimeout(() => setToastConfig({ isVisible: false, message: "" }), 3000);
     } catch (error) {
       console.log(error);
+      if (error?.response?.status === 401) {
+        navigate("/login");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,6 +77,8 @@ const useFeed = () => {
     handleUserAction,
     toastConfig,
     feeds,
+    loading,
+    showShimmer,
   };
 };
 

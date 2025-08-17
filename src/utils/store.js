@@ -3,6 +3,7 @@ import UserReducer from "./userSlice";
 import FeedReducer from "./feedSlice";
 import ConnectionReducer from "./connectionSlice";
 import InvitationSlice from "./invitationSlice";
+import MessageSlice from "./messageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     feed: FeedReducer,
     connections: ConnectionReducer,
     invitations: InvitationSlice,
+    messages: MessageSlice,
   },
 });

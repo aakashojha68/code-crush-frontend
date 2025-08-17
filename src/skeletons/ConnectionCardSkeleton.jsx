@@ -1,10 +1,10 @@
 const ConnectionCardSkeleton = () => {
   return (
-    <div className="card card-side bg-base-200 shadow-sm mt-4">
-      <div className="card-body sm:flex-row gap-10 sm:items-center">
+    <div className="card card-side bg-base-200 shadow-sm mt-4 p-0">
+      <div className="card-body p-1 sm:flex-row gap-5 sm:items-center">
         {/* Avatar skeleton */}
         <div className="avatar">
-          <div className="skeleton w-24 h-24 rounded-full"></div>
+          <div className="skeleton w-10 h-10 rounded-full"></div>
         </div>
 
         {/* Text skeleton */}

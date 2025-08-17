@@ -8,7 +8,7 @@ const Invitations = () => {
   const invitations = useSelector((store) => store.invitations);
 
   return (
-    <div className="my-4 max-w-3xl relative m-auto">
+    <div className="my-4 relative w-full px-4">
       <div className="divider text-xl font-bold my-6">Invitations</div>
       {loading && <Loader />}
 
@@ -23,9 +23,9 @@ const Invitations = () => {
             return (
               <div
                 key={fromUserId._id}
-                className="card card-side bg-base-200 shadow-sm mt-4"
+                className="card card-side bg-base-200 shadow-sm mt-4 w-full"
               >
-                <div className="card-body sm:flex-row gap-10 sm:items-center">
+                <div className="card-body sm:flex-row gap-10 w-full">
                   <div className="avatar">
                     <div className=" skeleton w-30 rounded-full">
                       <img

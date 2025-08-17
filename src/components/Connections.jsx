@@ -1,13 +1,19 @@
 import useConnections from "../hooks/useConnections";
 import { useSelector } from "react-redux";
 import ConnectionCardSkeleton from "../skeletons/ConnectionCardSkeleton";
+import { useNavigate } from "react-router-dom";
 
 const Connections = () => {
+  const navigate = useNavigate();
   const { loading } = useConnections();
   const connections = useSelector((store) => store.connections);
 
+  const handleMessageClick = (targetUserId) => {
+    navigate("/chat/" + targetUserId);
+  };
+
   return (
-    <div className="my-4 max-w-3xl relative m-auto">
+    <div className="my-4 relative w-full px-4">
       <div className="divider text-xl font-bold my-6">Connections</div>
 
       {loading
@@ -20,9 +26,9 @@ const Connections = () => {
             return (
               <div
                 key={connection._id}
-                className="card card-side bg-base-200 shadow-sm mt-4"
+                className="card card-side bg-base-200 shadow-sm mt-4 w-full"
               >
-                <div className="card-body sm:flex-row gap-10 sm:items-center">
+                <div className="card-body sm:flex-row gap-10 w-full">
                   <div className="avatar">
                     <div className=" skeleton w-30 rounded-full">
                       <img
@@ -40,7 +46,12 @@ const Connections = () => {
                     </h2>
                     <p className="line-clamp-2">{connection.about}</p>
                     <div className="card-actions mt-2">
-                      <button className="btn btn-primary">Message</button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleMessageClick(connection._id)}
+                      >
+                        Message
+                      </button>
                       {/* <button className="btn btn-secondary">Accept</button> */}
                     </div>
                   </div>

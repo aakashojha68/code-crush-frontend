@@ -7,10 +7,11 @@ import Sidebar from "./Sidebar";
 const Layout = () => {
   const { loading, isTokenValid } = useTokenValid();
   const location = useLocation();
-  console.log(location);
 
   if (loading) return <h1>Loading...</h1>;
   if (!isTokenValid) return <h1>Loading</h1>;
+
+  console.log(import.meta.env);
 
   return (
     <div className="flex flex-col h-screen">

@@ -4,12 +4,18 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
 import Loader from "./Loader";
+import Toast from "./Toast";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("shubham@gmail.com");
+  const [password, setPassword] = useState("Shubham@gmail.com");
   const [loader, setLoader] = useState(false);
+  const [toastConfig, setToastConfig] = useState({
+    isVisible: false,
+    message: "",
+    className: "success",
+  });
 
   const handleEmailChange = (e) => {
     const { value } = e.target;
@@ -32,9 +38,25 @@ const Login = () => {
         },
         { withCredentials: true }
       );
+
       navigate("/feed", { replace: true });
     } catch (error) {
-      console.log(error);
+      setToastConfig(() => ({
+        isVisible: true,
+        message:
+          error.response.data.message ||
+          "Something went wrong, please try again after some time !!",
+        className: "error",
+      }));
+
+      setTimeout(
+        () =>
+          setToastConfig({
+            isVisible: false,
+            message: "",
+          }),
+        5000
+      );
     } finally {
       setLoader(false);
     }
@@ -44,6 +66,11 @@ const Login = () => {
     <>
       {loader && <Loader />}
       <Navbar />
+      <Toast
+        isVisble={toastConfig.isVisible}
+        message={toastConfig.message}
+        className={toastConfig.className}
+      />
       <div className="flex justify-center mt-[60px]">
         <div className="card w-96 bg-base-300 card-lg shadow-sm">
           <div className="card-body">

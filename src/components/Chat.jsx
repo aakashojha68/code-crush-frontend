@@ -6,33 +6,47 @@ import axios from "axios";
 import { BACKEND_BASE_URL } from "../utils/constant";
 import { addMessage, addMessages } from "../utils/messageSlice";
 import { extractTimeFromDate } from "../utils/helper";
+import ChatShimmer from "../skeletons/ChatShimmer";
+import useSidebar from "../hooks/useSidebar";
 
 const Chat = () => {
   const dispatch = useDispatch();
   const { targetUserId } = useParams();
+
+  const { handleToggleSidebar, isSidebarOpen } = useSidebar();
 
   const recentMessages = useSelector((store) => store.messages);
   const user = useSelector((store) => store.user);
   const connections = useSelector((store) => store.connections);
 
   const [msg, setMsg] = useState("");
+  const [loader, setLoader] = useState(false);
+
   const socketId = useRef(null);
   const fromUserId = user._id;
   const chatEndRef = useRef(null);
 
   const fetchChats = async () => {
     try {
+      setLoader(true);
       const res = await axios.get(BACKEND_BASE_URL + "/chat/" + targetUserId, {
         withCredentials: true,
       });
       dispatch(addMessages(res.data.data));
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
   useEffect(() => {
     fetchChats();
+
+    // Close sidebar on mobile
+    if (isSidebarOpen && window.innerWidth < 768) {
+      handleToggleSidebar();
+    }
   }, [targetUserId]);
 
   useEffect(() => {
@@ -91,15 +105,17 @@ const Chat = () => {
     (user) => user._id?.toString() === targetUserId
   );
 
+  if (!connections?.length || !targetUser) return;
+
   return (
-    <div className="flex flex-col h-full p-4">
+    <div className="flex flex-col h-full md:p-4">
       <div className="navbar bg-base-200 shadow-sm px-4">
         <div className="flex-1">
           <div className="avatar">
             <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
               <img
                 src={
-                  targetUser.photoUrl ||
+                  targetUser?.photoUrl ||
                   "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                 }
               />
@@ -111,12 +127,24 @@ const Chat = () => {
         </div>
       </div>
       {/* Messages scrollable */}
-      <div className="flex-1 overflow-y-auto p-4">
-        {recentMessages?.length === 0 ? (
+      <div className="flex-1 overflow-y-auto md:p-4 px-1">
+        {loader && <ChatShimmer count={10} />}
+        {!loader && recentMessages?.length === 0 && (
           <div className="h-full flex items-center justify-center text-gray-500">
-            No chat history yet
+            <div className="card bg-base-200 shadow-sm w-full max-w-md mx-auto mt-6">
+              <div className="card-body items-center text-center">
+                <span className="text-5xl mb-2">💬</span>
+                <h2 className="card-title text-white">No Chat History</h2>
+                <p className="text-gray-500">
+                  You haven’t started any chats yet. Start a conversation to see
+                  messages here!
+                </p>
+              </div>
+            </div>
           </div>
-        ) : (
+        )}
+        {!loader &&
+          recentMessages?.length > 0 &&
           recentMessages.map(({ senderId, text, createdAt, _id }) => (
             <div
               key={_id}
@@ -128,14 +156,15 @@ const Chat = () => {
             >
               <div className="chat-header">
                 {senderId.firstName}
-                <time className="text-xs opacity-50 ml-2">
+                <time className=" opacity-50 ml-2">
                   {extractTimeFromDate(createdAt)}
                 </time>
               </div>
-              <div className="chat-bubble">{text}</div>
+              <div className="chat-bubble text-sm px-2 py-1 md:px-4 md:py-2 md:text-base">
+                {text}
+              </div>
             </div>
-          ))
-        )}
+          ))}
         <div ref={chatEndRef} />
       </div>
 

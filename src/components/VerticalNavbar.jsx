@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   Handshake,
   LogOut,
@@ -10,13 +10,6 @@ import {
 import useLogOut from "../hooks/useLogOut";
 import useSidebar from "../hooks/useSidebar";
 
-/*
-TODO: 
-1. add valid icon in place - done
-2. Add opening and close side bar - done
-3. check it for mobile screen
-
-*/
 const VerticalNavbar = () => {
   const user = useSelector((store) => store.user);
   const { handleLogOut } = useLogOut();
@@ -37,7 +30,7 @@ const VerticalNavbar = () => {
 
   return (
     <div className="w-auto bg-base-300">
-      <ul tabIndex={0} className="menu menu-sm mt-3 w-full p-2">
+      <ul tabIndex={0} className="menu menu-sm w-full p-2 mt-2 md:mt-3">
         <div className="avatar">
           <div className="ring-primary ring-offset-base-100 w-10 md:w-14 rounded-full ring-2 ring-offset-2">
             <img

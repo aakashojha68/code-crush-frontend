@@ -69,7 +69,15 @@ const Invitations = () => {
       {!loading &&
         !showShimmer &&
         (!invitations || invitations.length === 0) && (
-          <h1 className="my-2">No invitaions found !!</h1>
+          <div className="card bg-base-200 shadow-sm mt-6 w-full max-w-md justify-self-center">
+            <div className="card-body items-center text-center">
+              <span className="text-5xl mb-2">🙌</span>
+              <h2 className="card-title">No Invitations</h2>
+              <p className="text-gray-500">
+                Looks like you’re all caught up — no new invitations right now!
+              </p>
+            </div>
+          </div>
         )}
     </div>
   );

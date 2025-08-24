@@ -3,11 +3,13 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
+import Loader from "./Loader";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("shubham@gmail.com");
-  const [password, setPassword] = useState("Shubham@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loader, setLoader] = useState(false);
 
   const handleEmailChange = (e) => {
     const { value } = e.target;
@@ -21,6 +23,7 @@ const Login = () => {
 
   const handleLoginClick = async () => {
     try {
+      setLoader(true);
       await axios.post(
         BACKEND_BASE_URL + "/login",
         {
@@ -32,11 +35,14 @@ const Login = () => {
       navigate("/feed", { replace: true });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
   return (
     <>
+      {loader && <Loader />}
       <Navbar />
       <div className="flex justify-center mt-[60px]">
         <div className="card w-96 bg-base-300 card-lg shadow-sm">

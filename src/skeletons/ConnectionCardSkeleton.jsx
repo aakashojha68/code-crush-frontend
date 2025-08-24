@@ -9,9 +9,9 @@ const ConnectionCardSkeleton = () => {
 
         {/* Text skeleton */}
         <div className="flex-1">
-          <div className="skeleton h-6 w-40 mb-2"></div> {/* Name */}
-          <div className="skeleton h-4 w-full mb-1"></div> {/* About line 1 */}
-          <div className="skeleton h-4 w-5/6"></div> {/* About line 2 */}
+          <div className="skeleton h-6 w-40 mb-2"></div>
+          <div className="skeleton h-4 w-full mb-1"></div>
+          <div className="skeleton h-4 w-5/6"></div>
         </div>
       </div>
     </div>

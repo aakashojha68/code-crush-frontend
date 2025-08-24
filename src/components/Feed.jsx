@@ -21,7 +21,17 @@ const Feed = () => {
           <UserCard user={feeds[0]} onStatusClick={handleUserAction} />
         )}
 
-        {!showShimmer && !feeds?.length && <h3>No feed history found !!</h3>}
+        {!showShimmer && !feeds?.length && (
+          <div className="card bg-base-200 shadow-sm w-full max-w-md">
+            <div className="card-body items-center text-center">
+              <span className="text-5xl mb-2">📭</span>
+              <h2 className="card-title">No Feed History</h2>
+              <p className="text-gray-500">
+                You don’t have any feed history yet. Check back later!
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

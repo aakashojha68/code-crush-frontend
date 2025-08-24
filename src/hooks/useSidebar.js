@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSidebar } from "../utils/sidebarSlice";
+import { hideSidebar, toggleSidebar } from "../utils/sidebarSlice";
 
 const useSidebar = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,11 @@ const useSidebar = () => {
     dispatch(toggleSidebar());
   };
 
-  return { handleToggleSidebar, isSidebarOpen };
+  const handleHideSidebar = () => {
+    dispatch(hideSidebar());
+  };
+
+  return { handleToggleSidebar, handleHideSidebar, isSidebarOpen };
 };
 
 export default useSidebar;

@@ -154,7 +154,7 @@ const Chat = () => {
                   : "chat-start"
               }`}
             >
-              <div className="chat-header">
+              <div className="chat-header text-xs">
                 {senderId.firstName}
                 <time className=" opacity-50 ml-2">
                   {extractTimeFromDate(createdAt)}
@@ -169,7 +169,7 @@ const Chat = () => {
       </div>
 
       {/* Input fixed at bottom of chat */}
-      <div className="p-4 border-t flex gap-4">
+      <div className="p-4 border-t border-gray-700 flex gap-4">
         <input
           type="text"
           value={msg}

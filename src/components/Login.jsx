@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
 import Loader from "./Loader";
 
@@ -71,6 +71,12 @@ const Login = () => {
                 Login
               </button>
             </div>
+            <h3 className="text-sm text-center ">
+              New User ?{" "}
+              <Link to={"/signup"} className="hover:text-gray-300">
+                Sign Up
+              </Link>
+            </h3>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
 import { useEffect, useState } from "react";
 import { addInvitation, removeInvitation } from "../utils/invitationSlice";
+import { removeConnection } from "../utils/connectionSlice";
 
 const useInvitation = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const useInvitation = () => {
         }
       );
       dispatch(removeInvitation(requestId));
+      dispatch(removeConnection());
     } catch (error) {
       if (error?.response?.status === 401) {
         navigate("/login");

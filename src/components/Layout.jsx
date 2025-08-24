@@ -3,7 +3,7 @@ import useTokenValid from "../hooks/useTokenValid";
 import Sidebar from "./Sidebar";
 import VerticalNavbar from "./VerticalNavbar";
 import useSidebar from "../hooks/useSidebar";
-import { Loader } from "lucide-react";
+import Loader from "./Loader";
 
 const Layout = () => {
   const { loading, isTokenValid } = useTokenValid();
@@ -15,7 +15,7 @@ const Layout = () => {
   return (
     <div className="flex flex-row h-screen">
       <VerticalNavbar />
-      <Sidebar />
+      {isSidebarOpen && <Sidebar />}
 
       {/* Chat area */}
       <div

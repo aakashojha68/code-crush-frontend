@@ -27,7 +27,7 @@ const Profile = () => {
     { name: "phoneNumber", label: "Phone Number", type: "text" },
     { name: "gender", label: "Gender", type: "text" },
     { name: "age", label: "Age", type: "number" },
-    { name: "about", label: "About", type: "text" },
+    { name: "about", label: "About", type: "textarea" },
     { name: "photoUrl", label: "Photo URL", type: "text" },
   ];
 
@@ -88,13 +88,23 @@ const Profile = () => {
               {fields.map(({ name, label, type }) => (
                 <fieldset key={name} className="fieldset">
                   <legend className="fieldset-legend">{label}</legend>
-                  <input
-                    type={type}
-                    name={name}
-                    className="input"
-                    value={formData?.[name] || ""}
-                    onChange={handleChange}
-                  />
+                  {type === "textarea" ? (
+                    <textarea
+                      className="textarea h-24"
+                      placeholder="Bio"
+                      name={name}
+                      value={formData?.[name] || ""}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    <input
+                      type={type}
+                      name={name}
+                      className="input"
+                      value={formData?.[name] || ""}
+                      onChange={handleChange}
+                    />
+                  )}
                 </fieldset>
               ))}
 

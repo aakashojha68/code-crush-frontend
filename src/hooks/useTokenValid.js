@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect, useState } from "react";
+import { hideSidebar } from "../utils/sidebarSlice";
 
 const useTokenValid = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,9 @@ const useTokenValid = () => {
       });
       setIsTokenValid(true);
       dispatch(addUser(res.data.data));
-      navigate(pathname, { replace: true });
+      const pathName =
+        pathname === "/login" || pathname === "/signup" ? "/feed" : pathname;
+      navigate(pathName, { replace: true });
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/login", { replace: true });
@@ -28,6 +31,7 @@ const useTokenValid = () => {
 
         // clearing slices
         dispatch(removeUser());
+        dispatch(hideSidebar());
       }
     } finally {
       setLoading(false);

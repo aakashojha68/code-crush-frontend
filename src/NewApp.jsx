@@ -10,6 +10,7 @@ import { lazy, Suspense } from "react";
 import Loader from "./components/Loader";
 import ErrorPage from "./components/ErrorPage";
 import Chat from "./components/Chat";
+import SignUp from "./components/SignUp";
 
 const Invitations = lazy(() => import("./components/Invitations"));
 const Connections = lazy(() => import("./components/Connections"));
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     Component: Login,
+  },
+  {
+    path: "/signup",
+    Component: SignUp,
   },
   {
     path: "/",

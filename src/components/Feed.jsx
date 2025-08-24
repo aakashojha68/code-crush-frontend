@@ -11,10 +11,9 @@ const Feed = () => {
   return (
     <div className="my-4 relative w-full px-4">
       {loading && <Loader />}
+      <Toast isVisble={toastConfig.isVisible} message={toastConfig.message} />
       <div className="divider text-xl font-bold my-6">Feed</div>
       <div className="flex justify-center my-4 relative">
-        <Toast isVisble={toastConfig.isVisible} message={toastConfig.message} />
-
         {showShimmer && <UserCardShimmer />}
 
         {!showShimmer && feeds.length > 0 && (

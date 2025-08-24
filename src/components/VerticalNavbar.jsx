@@ -13,12 +13,27 @@ import useSidebar from "../hooks/useSidebar";
 const VerticalNavbar = () => {
   const user = useSelector((store) => store.user);
   const { handleLogOut } = useLogOut();
-  const { handleToggleSidebar, isSidebarOpen } = useSidebar();
+  const { handleToggleSidebar, handleHideSidebar } = useSidebar();
 
   const options = [
-    { name: "Profile", path: "/profile", icon: <UserRoundPen /> },
-    { name: "Feed", path: "/feed", icon: <MessageSquareDot /> },
-    { name: "Invitations", path: "/invitations", icon: <Handshake /> },
+    {
+      name: "Profile",
+      path: "/profile",
+      icon: <UserRoundPen />,
+      onClick: handleHideSidebar,
+    },
+    {
+      name: "Feed",
+      path: "/feed",
+      icon: <MessageSquareDot />,
+      onClick: handleHideSidebar,
+    },
+    {
+      name: "Invitations",
+      path: "/invitations",
+      icon: <Handshake />,
+      onClick: handleHideSidebar,
+    },
     {
       name: "Chat",
       path: "#",
@@ -27,6 +42,8 @@ const VerticalNavbar = () => {
     },
     { name: "Logout", path: "", icon: <LogOut />, onClick: handleLogOut },
   ];
+
+  if (!user) return;
 
   return (
     <div className="w-auto bg-base-300">

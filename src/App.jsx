@@ -9,6 +9,7 @@ import Connections from "./components/Connections";
 import Invitations from "./components/Invitations";
 import { store } from "./utils/store";
 import Chat from "./components/Chat";
+import SignUp from "./components/SignUp";
 
 // Before v6.4 → called the "JSX Route Elements" API (or sometimes just the old JSX-based routing).
 
@@ -23,6 +24,7 @@ function App() {
               element={<Navigate to={"/login"} replace={true} />}
             />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/" element={<Layout />}>
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
 import { useEffect, useState } from "react";
@@ -8,7 +8,8 @@ import { addConnection } from "../utils/connectionSlice";
 const useConnections = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const connections = useSelector((store) => store.connections);
+  const [loading, setLoading] = useState(false);
 
   const fetchConnections = async () => {
     try {
@@ -18,6 +19,7 @@ const useConnections = () => {
       });
       dispatch(addConnection(res.data.data));
     } catch (error) {
+      console.log(error);
       if (error.response.status === 401) {
         navigate("/login");
       }
@@ -27,10 +29,11 @@ const useConnections = () => {
   };
 
   useEffect(() => {
+    if (connections?.length) return;
     fetchConnections();
   }, []);
 
-  return { loading };
+  return { loading, connections };
 };
 
 export default useConnections;

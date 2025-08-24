@@ -9,7 +9,7 @@ const useFeed = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const LIMIT = 2;
+  const LIMIT = 10;
 
   const { totalUsers, feeds } = useSelector((store) => store.feed);
   const [toastConfig, setToastConfig] = useState({
@@ -51,11 +51,12 @@ const useFeed = () => {
         }
       );
       setToastConfig({ isVisible: true, message: res.data.message });
-      dispatch(removeFeed(id));
 
       // refresh the data
-      if (totalUsers > 1 && feeds?.length <= 1) {
+      if (totalUsers > 1 && feeds?.length - 1 === 0) {
         fetchUserFeed();
+      } else {
+        dispatch(removeFeed(id));
       }
 
       setTimeout(() => setToastConfig({ isVisible: false, message: "" }), 3000);

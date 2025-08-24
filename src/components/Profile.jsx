@@ -76,36 +76,42 @@ const Profile = () => {
   if (!user) return;
 
   return (
-    <div className="flex justify-center gap-10 items-center">
-      <Toast isVisble={toastConfig.isVisible} message={toastConfig.message} />
-      <div className="flex justify-center my-2">
-        <div className="card w-96 bg-base-300 card-lg shadow-sm">
-          <div className="card-body">
-            <h2 className="card-title">Profile</h2>
+    <div className="h-screen overflow-y-auto px-2">
+      <div className="divider text-xl font-bold my-6">Profile</div>
+      <div className="flex flex-col gap-10 md:flex-row md:justify-center items-center mb-4 ">
+        <Toast isVisble={toastConfig.isVisible} message={toastConfig.message} />
+        <div className="flex justify-center my-2 w-full md:w-auto">
+          <div className="card w-full md:w-96 bg-base-300 shadow-sm ">
+            <div className="card-body">
+              {/* <h2 className="card-title">Profile</h2> */}
 
-            {fields.map(({ name, label, type }) => (
-              <fieldset key={name} className="fieldset">
-                <legend className="fieldset-legend">{label}</legend>
-                <input
-                  type={type}
-                  name={name}
-                  className="input"
-                  value={formData?.[name] || ""}
-                  onChange={handleChange}
-                />
-              </fieldset>
-            ))}
+              {fields.map(({ name, label, type }) => (
+                <fieldset key={name} className="fieldset">
+                  <legend className="fieldset-legend">{label}</legend>
+                  <input
+                    type={type}
+                    name={name}
+                    className="input"
+                    value={formData?.[name] || ""}
+                    onChange={handleChange}
+                  />
+                </fieldset>
+              ))}
 
-            <div className="justify-center card-actions mt-5">
-              <button className="btn btn-primary" onClick={handleUpdateDetails}>
-                Save
-              </button>
+              <div className="justify-center card-actions mt-5">
+                <button
+                  className="btn btn-primary"
+                  onClick={handleUpdateDetails}
+                >
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <UserCard user={formData} hideBtn={true} />
+        <UserCard user={formData} hideBtn={true} />
+      </div>
     </div>
   );
 };

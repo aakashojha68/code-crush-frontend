@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import connectSocket from "../utils/socket";
@@ -13,6 +13,7 @@ const Chat = () => {
 
   const recentMessages = useSelector((store) => store.messages);
   const user = useSelector((store) => store.user);
+  const connections = useSelector((store) => store.connections);
 
   const [msg, setMsg] = useState("");
   const socketId = useRef(null);
@@ -86,8 +87,29 @@ const Chat = () => {
     }
   };
 
+  const targetUser = connections.find(
+    (user) => user._id?.toString() === targetUserId
+  );
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full p-4">
+      <div className="navbar bg-base-200 shadow-sm px-4">
+        <div className="flex-1">
+          <div className="avatar">
+            <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
+              <img
+                src={
+                  targetUser.photoUrl ||
+                  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                }
+              />
+            </div>
+          </div>
+          <a className="btn btn-ghost text-xl">
+            {targetUser.firstName + " " + targetUser.lastName}
+          </a>
+        </div>
+      </div>
       {/* Messages scrollable */}
       <div className="flex-1 overflow-y-auto p-4">
         {recentMessages?.length === 0 ? (

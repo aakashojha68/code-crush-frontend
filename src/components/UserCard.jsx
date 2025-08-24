@@ -1,15 +1,13 @@
-import Loader from "./Loader";
-
 const UserCard = ({ user, onStatusClick, hideBtn = false }) => {
   const { _id, photoUrl, firstName, lastName, gender, age, about } = user || {};
 
   return (
     user && (
-      <div key={_id} className="card bg-base-200 w-96 shadow-sm">
+      <div key={_id} className="card bg-base-200 w-full md:w-96 shadow-sm">
         <figure>
           <img src={photoUrl} alt="user" />
         </figure>
-        <div className="card-body">
+        <div className="card-body p-2 md:p-4">
           <h2 className="card-title">{firstName + " " + lastName}</h2>
           <p>
             {gender} | {age}

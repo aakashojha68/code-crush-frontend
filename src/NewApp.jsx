@@ -10,7 +10,6 @@ import { lazy, Suspense } from "react";
 import Loader from "./components/Loader";
 import ErrorPage from "./components/ErrorPage";
 import Chat from "./components/Chat";
-// import socketIO from "socket.io-client";
 
 const Invitations = lazy(() => import("./components/Invitations"));
 const Connections = lazy(() => import("./components/Connections"));

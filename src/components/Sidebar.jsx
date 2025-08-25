@@ -3,6 +3,7 @@ import useConnections from "../hooks/useConnections";
 import ConnectionCardSkeleton from "../skeletons/ConnectionCardSkeleton";
 import { X } from "lucide-react";
 import useSidebar from "../hooks/useSidebar";
+import ConnectedUserSkeleton from "../skeletons/ConnectedUserSkeleton";
 
 const Sidebar = () => {
   const { loading, connections } = useConnections();
@@ -38,7 +39,7 @@ const Sidebar = () => {
         {loading &&
           Array(3)
             .fill()
-            .map((_, i) => <ConnectionCardSkeleton key={i} />)}
+            .map((_, i) => <ConnectedUserSkeleton key={i} />)}
         {!loading &&
           connections.length > 0 &&
           connections.map((connection) => {
@@ -67,7 +68,7 @@ const Sidebar = () => {
                       <h4 className="card-title text-base">
                         {connection.firstName} {connection.lastName}
                       </h4>
-                      <p className="line-clamp-2 text-sm">{connection.about}</p>
+                      <p className="line-clamp-2 text-xs">{connection.about}</p>
                     </div>
                   </div>
                 </div>

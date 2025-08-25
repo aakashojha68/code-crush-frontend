@@ -5,12 +5,13 @@ import { BACKEND_BASE_URL } from "../utils/constant";
 import { useEffect, useState } from "react";
 import { addInvitation, removeInvitation } from "../utils/invitationSlice";
 import { removeConnection } from "../utils/connectionSlice";
+import { hideSidebar } from "../utils/sidebarSlice";
 
 const useInvitation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [showShimmer, setShowShimmer] = useState(true);
+  const [showShimmer, setShowShimmer] = useState(false);
 
   const fetchInvitations = async () => {
     try {
@@ -39,6 +40,7 @@ const useInvitation = () => {
       );
       dispatch(removeInvitation(requestId));
       dispatch(removeConnection());
+      dispatch(hideSidebar());
     } catch (error) {
       if (error?.response?.status === 401) {
         navigate("/login");

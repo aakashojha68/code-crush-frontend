@@ -15,6 +15,7 @@ const useFeed = () => {
   const [toastConfig, setToastConfig] = useState({
     isVisible: false,
     message: "",
+    className: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -50,7 +51,11 @@ const useFeed = () => {
           withCredentials: true,
         }
       );
-      setToastConfig({ isVisible: true, message: res.data.message });
+      setToastConfig({
+        isVisible: true,
+        message: res.data.message,
+        className: "alert-success",
+      });
 
       // refresh the data
       if (totalUsers > 1 && feeds?.length - 1 === 0) {

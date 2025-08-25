@@ -5,8 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
 import Loader from "./Loader";
 import Toast from "./Toast";
+import useTokenValid from "../hooks/useTokenValid";
+import MandatoryField from "./MandatoryField";
 
 const Login = () => {
+  const { loading } = useTokenValid();
   const navigate = useNavigate();
   const [email, setEmail] = useState("shubham@gmail.com");
   const [password, setPassword] = useState("Shubham@gmail.com");
@@ -14,7 +17,7 @@ const Login = () => {
   const [toastConfig, setToastConfig] = useState({
     isVisible: false,
     message: "",
-    className: "success",
+    className: "",
   });
 
   const handleEmailChange = (e) => {
@@ -46,7 +49,7 @@ const Login = () => {
         message:
           error.response.data.message ||
           "Something went wrong, please try again after some time !!",
-        className: "error",
+        className: "alert-error",
       }));
 
       setTimeout(
@@ -64,7 +67,7 @@ const Login = () => {
 
   return (
     <>
-      {loader && <Loader />}
+      {(loader || loading) && <Loader />}
       <Navbar />
       <Toast
         isVisble={toastConfig.isVisible}
@@ -76,7 +79,10 @@ const Login = () => {
           <div className="card-body">
             <h2 className="card-title">Login</h2>
             <fieldset className="fieldset">
-              <legend className="fieldset-legend">Email</legend>
+              <legend className="fieldset-legend gap-1">
+                Email
+                <MandatoryField />
+              </legend>
               <input
                 type="text"
                 className="input"
@@ -85,7 +91,10 @@ const Login = () => {
               />
             </fieldset>
             <fieldset className="fieldset">
-              <legend className="fieldset-legend">Password</legend>
+              <legend className="fieldset-legend gap-1">
+                Password
+                <MandatoryField />
+              </legend>
               <input
                 type="password"
                 className="input"

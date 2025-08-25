@@ -1,8 +1,8 @@
-const Toast = ({ isVisble, message, className = "success" }) => {
+const Toast = ({ isVisble, message, className = "alert-success" }) => {
   return (
     isVisble && (
       <div className="toast toast-end toast-top absolute z-10">
-        <div className={`alert alert-${className}`}>
+        <div className={`alert ${className}`}>
           <span>{message}</span>
         </div>
       </div>

@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import Navbar from "./Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constant";
+import MandatoryField from "./MandatoryField";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -18,15 +19,15 @@ const SignUp = () => {
 
   // Form fields configuration
   const fields = [
-    { name: "firstName", label: "First Name", type: "text" },
-    { name: "lastName", label: "Last Name", type: "text" },
-    { name: "email", label: "Email", type: "email" },
-    { name: "password", label: "Password", type: "password" },
-    { name: "phoneNumber", label: "Phone Number", type: "text" },
-    { name: "gender", label: "Gender", type: "text" },
-    { name: "age", label: "Age", type: "number" },
-    { name: "about", label: "About", type: "textarea" },
+    { name: "firstName", label: "First Name", type: "text", mandatory: 1 },
+    { name: "lastName", label: "Last Name", type: "text", mandatory: 1 },
+    { name: "email", label: "Email", type: "email", mandatory: 1 },
+    { name: "password", label: "Password", type: "password", mandatory: 1 },
+    { name: "phoneNumber", label: "Phone Number", type: "text", mandatory: 1 },
+    { name: "gender", label: "Gender", type: "select", mandatory: 1 },
+    { name: "age", label: "Age", type: "number", mandatory: 1 },
     { name: "photoUrl", label: "Photo URL", type: "text" },
+    { name: "about", label: "About", type: "textarea" },
   ];
 
   const handleChange = (e) => {
@@ -66,34 +67,50 @@ const SignUp = () => {
     <div className="h-screen">
       {loader && <Loader />}
       <Navbar />
-      {/* <div className="flex flex-col justify-center items-center mb-4 "> */}
       <Toast isVisble={toastConfig.isVisible} message={toastConfig.message} />
       <div className="flex justify-center m-2">
-        <div className="card w-full md:w-96 bg-base-300 shadow-sm ">
+        <div className="card w-full md:max-w-2xl bg-base-300 shadow-sm ">
           <div className="card-body">
             <h2 className="card-title">Sign Up</h2>
-            {fields.map(({ name, label, type }) => (
-              <fieldset key={name} className="fieldset">
-                <legend className="fieldset-legend">{label}</legend>
-                {type === "textarea" ? (
-                  <textarea
-                    className="textarea h-24"
-                    placeholder="Bio"
-                    name={name}
-                    value={formData?.[name] || ""}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  <input
-                    type={type}
-                    name={name}
-                    className="input"
-                    value={formData?.[name] || ""}
-                    onChange={handleChange}
-                  />
-                )}
-              </fieldset>
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-2">
+              {fields.map(({ name, label, type, mandatory }) => (
+                <fieldset key={name} className="fieldset">
+                  <legend className="fieldset-legend gap-1">
+                    {label} {mandatory === 1 && <MandatoryField />}
+                  </legend>
+                  {type === "textarea" ? (
+                    <textarea
+                      className="textarea h-24"
+                      name={name}
+                      value={formData?.[name] || ""}
+                      onChange={handleChange}
+                    />
+                  ) : type === "select" ? (
+                    <select
+                      className="select"
+                      name={name}
+                      value={formData?.[name] || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>
+                        Select Gender
+                      </option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  ) : (
+                    <input
+                      type={type}
+                      name={name}
+                      className="input"
+                      value={formData?.[name] || ""}
+                      onChange={handleChange}
+                    />
+                  )}
+                </fieldset>
+              ))}
+            </div>
 
             <h3 className="text-sm text-red-600 ">{error}</h3>
 

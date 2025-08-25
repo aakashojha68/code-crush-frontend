@@ -45,7 +45,7 @@ const Sidebar = () => {
             return (
               <Link key={connection._id} to={"/chat/" + connection._id}>
                 <div
-                  className={` card card-side shadow-sm p-2 hover:bg-base-100 cursor-pointer ${
+                  className={` card card-side shadow-sm p-2 hover:bg-base-100 cursor-pointer border-b border-gray-800 ${
                     targetUserId === connection._id.toString()
                       ? "bg-base-100"
                       : "bg-base-200"
